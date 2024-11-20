@@ -10,7 +10,14 @@ const canvas = Canvas.init();
 
 const middleX = canvas.width / 2;
 
+let max = Number(localStorage.getItem("highscore"));
 let count = 0;
+
+const highscore = document.getElementById("counter");
+
+if (highscore && max != 0) {
+  highscore.innerHTML = "High Score: " + max;
+}
 
 function setCounter() {
   const h1 = document.getElementById("counter");
@@ -76,6 +83,10 @@ class Obstacle {
       if (canvas.outOfBounds(trigger)) {
         count++;
         setCounter();
+        if (count > max) {
+          max = count;
+          localStorage.setItem("highscore", String(count));
+        }
         this.generate();
       }
     };
