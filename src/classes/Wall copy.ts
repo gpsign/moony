@@ -5,7 +5,7 @@ import Entity from "./Entity";
 export default class Trigger extends Entity {
   constructor(props: Area) {
     super("trigger", props);
-    this.color = "red";
+    this.color = "transparent";
   }
 
   onLoop(_canvas: Canvas): void {
