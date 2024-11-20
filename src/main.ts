@@ -2,7 +2,7 @@ import Canvas from "./classes/Canvas";
 import { Random } from "./classes/Random";
 import { Rocket } from "./classes/Rocket";
 import Wall from "./classes/Wall";
-import Trigger from "./classes/Wall copy";
+import Trigger from "./classes/Trigger";
 import { config } from "./config";
 import "./style.css";
 
@@ -32,7 +32,7 @@ class Obstacle {
     this.triggered = false;
     canvas.entities = canvas.entities.filter((e) => e.id == "rocket");
 
-    const triggerX = Random.get(0, canvas.width - triggerWidth);
+    const triggerX = Random.get(size, canvas.width - (triggerWidth + size));
     const trigger = new Trigger({
       x: triggerX,
       y: -size,
