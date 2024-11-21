@@ -2,8 +2,6 @@ import Canvas from "./classes/Canvas";
 import { Random } from "./classes/Random";
 import { Rocket } from "./classes/Rocket";
 import Wall from "./classes/Wall";
-import Trigger from "./classes/Trigger";
-import { config } from "./config";
 import "./style.css";
 
 const canvas = Canvas.init();
@@ -40,7 +38,7 @@ class Obstacle {
     canvas.entities = canvas.entities.filter((e) => e.id == "rocket");
 
     const triggerX = Random.get(size, canvas.width - (triggerWidth + size));
-    const trigger = new Trigger({
+    const trigger = new Wall({
       x: triggerX,
       y: -size,
       width: triggerWidth,
@@ -58,6 +56,8 @@ class Obstacle {
       width: canvas.width - trigger.right,
       height: size,
     });
+
+    trigger.color = "transparent";
 
     leftWall.onLoop = () => {
       leftWall.y += canvas.height / 150;
@@ -109,19 +109,18 @@ canvas.entities.push(
 new Obstacle().generate();
 
 const btn = document.createElement("button");
-let interval: number;
+
+function timeout() {
+  canvas.render();
+
+  setTimeout(timeout, 1000 / (60 + count * 2));
+}
+
 btn.innerHTML = "Start";
 btn.addEventListener("click", () => {
-  const c = document.querySelector<HTMLCanvasElement>("#canvas");
-  c?.focus();
   setCounter();
   btn.style.display = "none";
-  if (interval) {
-    location.reload();
-  }
-  btn.innerHTML = "Stop";
-  interval = setInterval(() => {
-    canvas.render();
-  }, 1000 / config.FPS);
+
+  timeout();
 });
 document.body.appendChild(btn);
